@@ -2,9 +2,9 @@ import java.util.Scanner;
 
 public class PE05_CastellonAlbert {
     
-    String comand = "";
+    String comand = "", ImportTally = "";
     Scanner escaner = new Scanner(System.in);
-    double totalImport = 0;
+    double totalImport = 0, iva = 0, finalImport;
     
     public static void main(String[] args) {
         PE05_CastellonAlbert p = new PE05_CastellonAlbert();
@@ -29,13 +29,22 @@ public class PE05_CastellonAlbert {
                 case 1:
                     comand += createTiquet();
                     System.out.println(comand);
+                    System.out.println(ImportTally);
                     break;
-            
+                case 2:
+                    comand += modifyTiquet();
+                    System.out.println(comand);
+                    System.out.println(ImportTally);
+                    break;
+                case 3:
+                    System.out.println(comand);
+                    System.out.println(ImportTally);
+                    break;
                 default:
                     break;
             }
             
-        }while(mainMenu == 0);
+        }while(mainMenu != 0);
     }
 
     public String createTiquet(){
@@ -46,7 +55,7 @@ public class PE05_CastellonAlbert {
         System.out.println("Introdueix nom del client:");
         name = escaner.next();
 
-        tiquet = "Client: " + name + "\nProducte\tQuantitat\tPreu unitari\tSubtotal\n" ;
+        tiquet = "Client: " + name + "\nProducte\tQuantitat\tPreu unitari\tSubtotal\n--------------------------------\n" ;
 
         while (control.equals("s")) {
 
@@ -54,7 +63,8 @@ public class PE05_CastellonAlbert {
             System.out.println("Vols afegir algun producte més? (s/n)");
             control = escaner.next();
 
-        }
+        } 
+        ImportTally = "--------------------------------\nTotal sense IVA: \t" + totalImport + " € \nIva (10%): \t" + (totalImport * 0.1) + " € \nTOTAL A PAGAR:\t" + (totalImport * 1.1) + "€\n================================\n";
         return tiquet;
     }
     public String addLine() {
@@ -80,5 +90,19 @@ public class PE05_CastellonAlbert {
         line = nameProduct + "\t" + productUnits + "\t" + unitPrice + " € \t" + unitPrice*productUnits + "\n";
         
         return line;
+    }
+    public String modifyTiquet() {
+        String tiquet = "";
+        String control = "s";
+        
+        while (control.equals("s")) {
+
+            tiquet = tiquet + "\n" + addLine();
+            System.out.println("Vols afegir algun producte més? (s/n)");
+            control = escaner.next();
+
+        }
+        ImportTally = "Total sense IVA: \t" + totalImport + " € \nIva (10%): \t" + (totalImport * 0.1) + " € \nTOTAL A PAGAR:\t" + (totalImport * 1.1) + "€\n";
+        return tiquet;
     }
 }

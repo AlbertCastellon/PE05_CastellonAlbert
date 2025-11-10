@@ -70,6 +70,7 @@ public class PE05_CastellonAlbert {
         ImportTally = "--------------------------------\nTotal sense IVA: \t" + totalImport + " € \nIva (10%): \t" + (totalImport * 0.1) + " € \nTOTAL A PAGAR:\t" + (totalImport * 1.1) + "€\n================================\n";
         return tiquet;
     }
+    
     public String addLine() {
 
         String nameProduct = "";
@@ -94,6 +95,7 @@ public class PE05_CastellonAlbert {
         
         return line;
     }
+
     public String modifyTiquet() {
         String tiquet = "";
         String control = "s";

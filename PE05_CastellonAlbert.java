@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class PE05_CastellonAlbert {
@@ -5,6 +6,7 @@ public class PE05_CastellonAlbert {
     String comand = "", ImportTally = "";
     Scanner escaner = new Scanner(System.in);
     double totalImport = 0, iva = 0, finalImport;
+    DecimalFormat df = new DecimalFormat("#.00");
     
     public static void main(String[] args) {
         PE05_CastellonAlbert p = new PE05_CastellonAlbert();
@@ -67,10 +69,10 @@ public class PE05_CastellonAlbert {
             control = escaner.next();
 
         } 
-        ImportTally = "--------------------------------\nTotal sense IVA: \t" + totalImport + " € \nIva (10%): \t" + (totalImport * 0.1) + " € \nTOTAL A PAGAR:\t" + (totalImport * 1.1) + "€\n================================\n";
+        ImportTally = "--------------------------------\nTotal sense IVA: \t" + df.format(totalImport) + " € \nIva (10%): \t" + df.format((totalImport * 0.1)) + " € \nTOTAL A PAGAR:\t" + df.format((totalImport * 1.1)) + "€\n================================\n";
         return tiquet;
     }
-    
+
     public String addLine() {
 
         String nameProduct = "";
@@ -91,7 +93,7 @@ public class PE05_CastellonAlbert {
         System.out.println("");
         
         totalImport += unitPrice * productUnits;
-        line = nameProduct + "\t" + productUnits + "\t" + unitPrice + " € \t" + unitPrice*productUnits + "\n";
+        line = nameProduct + "\t" + productUnits + "\t" + df.format(unitPrice) + " € \t" + df.format(unitPrice*productUnits) + "\n";
         
         return line;
     }
@@ -107,7 +109,7 @@ public class PE05_CastellonAlbert {
             control = escaner.next();
 
         }
-        ImportTally = "Total sense IVA: \t" + totalImport + " € \nIva (10%): \t" + (totalImport * 0.1) + " € \nTOTAL A PAGAR:\t" + (totalImport * 1.1) + "€\n";
+        ImportTally = "Total sense IVA: \t" + df.format(totalImport) + " € \nIva (10%): \t" + df.format((totalImport * 0.1)) + " € \nTOTAL A PAGAR:\t" + df.format((totalImport * 1.1)) + "€\n";
         return tiquet;
     }
 }

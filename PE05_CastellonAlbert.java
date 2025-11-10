@@ -40,6 +40,9 @@ public class PE05_CastellonAlbert {
                     System.out.println(comand);
                     System.out.println(ImportTally);
                     break;
+                case 4:
+                    mainMenu = 0;
+                    break;
                 default:
                     break;
             }

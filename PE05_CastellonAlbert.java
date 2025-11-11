@@ -1,11 +1,12 @@
 import java.text.DecimalFormat;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PE05_CastellonAlbert {
     
     String comand = "", ImportTally = "";
     Scanner escaner = new Scanner(System.in);
-    double totalImport = 0, iva = 0, finalImport;
+    double totalImport = 0;
     DecimalFormat df = new DecimalFormat("#.00");
     
     public static void main(String[] args) {
@@ -18,6 +19,7 @@ public class PE05_CastellonAlbert {
     public void principal() {
         
         int mainMenu = 0;
+        boolean exit = false;
         do {
 
         
@@ -26,9 +28,16 @@ public class PE05_CastellonAlbert {
             System.out.println("2. Modificar comanda");
             System.out.println("3. Visualitzar tiquet");
             System.out.println("4. Sortir");
-            mainMenu = escaner.nextInt();
+            try{
+                mainMenu = escaner.nextInt();
+            }catch(InputMismatchException e) {
+               System.out.println("Error: opció invàlida"); 
+            }
+            
             switch (mainMenu) {
                 case 1:
+                    comand = "";
+                    totalImport = 0;
                     comand += createTiquet();
                     System.out.println(comand);
                     System.out.println(ImportTally);
@@ -43,13 +52,14 @@ public class PE05_CastellonAlbert {
                     System.out.println(ImportTally);
                     break;
                 case 4:
-                    mainMenu = 0;
+                    exit = true;
                     break;
                 default:
+                    System.out.println("Selecciona una opció vàlida");
                     break;
             }
             
-        }while(mainMenu != 0);
+        }while(!exit);
     }
 
     public String createTiquet(){
@@ -60,7 +70,7 @@ public class PE05_CastellonAlbert {
         System.out.println("Introdueix nom del client:");
         name = escaner.next();
 
-        tiquet = "Client: " + name + "\nProducte\tQuantitat\tPreu unitari\tSubtotal\n--------------------------------\n" ;
+        tiquet = "Client: " + name + "\n" + normalizeString("Producte", 20) + normalizeString("Quantitat", 20)+ normalizeString("Preu unitari", 20) + normalizeString("Subtotal", 20)+ "\n----------------------------------------------------------------------\n" ;
 
         while (control.equals("s")) {
 
@@ -69,7 +79,7 @@ public class PE05_CastellonAlbert {
             control = escaner.next();
 
         } 
-        ImportTally = "--------------------------------\nTotal sense IVA: \t" + df.format(totalImport) + " € \nIva (10%): \t" + df.format((totalImport * 0.1)) + " € \nTOTAL A PAGAR:\t" + df.format((totalImport * 1.1)) + "€\n================================\n";
+        ImportTally = createTally(totalImport);
         return tiquet;
     }
 
@@ -85,15 +95,23 @@ public class PE05_CastellonAlbert {
         System.out.println("");
 
         System.out.print("Preu unitari: \t");
-        unitPrice = escaner.nextDouble();
+        try{
+            unitPrice = escaner.nextDouble();
+        }catch(InputMismatchException e){
+            System.out.println("Error: s'ha d'introduir un nombre");
+        }
         System.out.println("");
 
         System.out.print("Quantitat: \t");
-        productUnits = escaner.nextInt();
+        try {
+            productUnits = escaner.nextInt();
+        }catch (InputMismatchException e) {
+            System.out.println("Error: s'ha d'introduir un nombre enter");
+        }
         System.out.println("");
         
         totalImport += unitPrice * productUnits;
-        line = nameProduct + "\t" + productUnits + "\t" + df.format(unitPrice) + " € \t" + df.format(unitPrice*productUnits) + "\n";
+        line = normalizeString(nameProduct, 20) + normalizeString(productUnits + "", 20) + normalizeString(df.format(unitPrice) + " €", 20) + normalizeString(df.format(unitPrice*productUnits) + " €", 20) + "\n";
         
         return line;
     }
@@ -109,7 +127,21 @@ public class PE05_CastellonAlbert {
             control = escaner.next();
 
         }
-        ImportTally = "Total sense IVA: \t" + df.format(totalImport) + " € \nIva (10%): \t" + df.format((totalImport * 0.1)) + " € \nTOTAL A PAGAR:\t" + df.format((totalImport * 1.1)) + "€\n";
+        ImportTally = createTally(totalImport);
         return tiquet;
+    }
+
+    public String createTally(double finalImport) {
+        String tallyString = "======================================================================\n";
+        tallyString += normalizeString("Total sense IVA:", 60) + df.format(finalImport) + " € \n" + normalizeString("Iva (10%):", 60) + df.format((finalImport * 0.1)) + " € \n"+ normalizeString("TOTAL A PAGAR:", 60) + df.format((finalImport * 1.1)) + " €\n";
+        return tallyString;
+    }
+
+    public String normalizeString(String str, int space) {
+        String normalizedString = str;
+        for(int i = str.length(); i < space; i++){
+            normalizedString += " ";
+        }
+        return normalizedString;
     }
 }

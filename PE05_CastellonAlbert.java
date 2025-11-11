@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class PE05_CastellonAlbert {
     
-    String comand = "", ImportTally = "";
+    String ImportTally = "";
     Scanner escaner = new Scanner(System.in);
     double totalImport = 0;
     DecimalFormat df = new DecimalFormat("#.00");
@@ -15,11 +15,11 @@ public class PE05_CastellonAlbert {
 
     }
     
-
     public void principal() {
         
         int mainMenu = 0;
         boolean exit = false;
+        String comand = "";
         do {
 
         
@@ -43,13 +43,21 @@ public class PE05_CastellonAlbert {
                     System.out.println(ImportTally);
                     break;
                 case 2:
-                    comand += modifyTiquet();
-                    System.out.println(comand);
-                    System.out.println(ImportTally);
+                    if(comand.equals("")){
+                        System.out.println("Primer has de crear la comanda");
+                    }else {
+                        comand += modifyTiquet();
+                        System.out.println(comand);
+                        System.out.println(ImportTally);
+                    }
                     break;
                 case 3:
-                    System.out.println(comand);
-                    System.out.println(ImportTally);
+                    if(comand.equals("")){
+                        System.out.println("Primer has de crear la comanda");
+                    }else {
+                        System.out.println(comand);
+                        System.out.println(ImportTally);
+                    }
                     break;
                 case 4:
                     exit = true;

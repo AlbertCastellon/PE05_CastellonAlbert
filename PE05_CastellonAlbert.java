@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class PE05_CastellonAlbert {
     
-    String ImportTally = "";
     Scanner escaner = new Scanner(System.in);
     double totalImport = 0;
     DecimalFormat df = new DecimalFormat("#.00");
@@ -20,6 +19,8 @@ public class PE05_CastellonAlbert {
         int mainMenu = 0;
         boolean exit = false;
         String comand = "";
+        String ImportTally = "";
+
         do {
 
         
@@ -39,6 +40,7 @@ public class PE05_CastellonAlbert {
                     comand = "";
                     totalImport = 0;
                     comand += createTiquet();
+                    ImportTally = createTally(totalImport);
                     System.out.println(comand);
                     System.out.println(ImportTally);
                     break;
@@ -47,6 +49,7 @@ public class PE05_CastellonAlbert {
                         System.out.println("Primer has de crear la comanda");
                     }else {
                         comand += modifyTiquet();
+                        ImportTally = createTally(totalImport);
                         System.out.println(comand);
                         System.out.println(ImportTally);
                     }
@@ -87,7 +90,6 @@ public class PE05_CastellonAlbert {
             control = escaner.next();
 
         } 
-        ImportTally = createTally(totalImport);
         return tiquet;
     }
 
@@ -135,7 +137,7 @@ public class PE05_CastellonAlbert {
             control = escaner.next();
 
         }
-        ImportTally = createTally(totalImport);
+        
         return tiquet;
     }
 
